@@ -89,7 +89,7 @@ exports.handler = (event, context, callback) => {
     var slackToken = params.token;
 
     var currentTimestamp = DateFormat(0, 'DD/BBB/YYYY hh:mm:ss');
-    var s3_path = DateFormat(0, 'YYYY/MM-BBB/YYYYMMDD-hhmmss.log');
+    var s3_path = DateFormat(0, 'YYYY/MM-BBB/YYYYMMDD-hhmmss') + '.' + context.functionName + '.log';
 
     var log = [
         "timestamp............: " + currentTimestamp,
