@@ -1,7 +1,7 @@
 /**
  * AWS Lambda function: ExtensionDetails
  * Author: Michael Schams <t3extensions.org>
- * Version: 1.0.6
+ * Version: 1.0.7
  */
 
 'use strict';
@@ -212,7 +212,7 @@ exports.handler = (event, context, callback) => {
                                         "short": false
                                     }
                                 ],
-                                "footer": "Powered by <https://t3extensions.org|t3extensions.org> (suggested by @" + user  + ")\n[" + context.awsRequestId + "]"
+                                "footer": "Powered by <https://t3extensions.org|t3extensions.org>"
                             }
                         ]
                     })
