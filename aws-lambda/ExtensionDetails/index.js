@@ -173,7 +173,7 @@ function generateSlackSuccessResponse(extensionDetails) {
     if (typo3compatibility) {
         fields.push(
             {
-                "title": "Compatibilities",
+                "title": "Compatibility",
                 "value": 'TYPO3 ' + typo3compatibility,
                 "short": false
             }
@@ -192,14 +192,12 @@ function generateSlackSuccessResponse(extensionDetails) {
     };
 
     if (extensionAuthor) {
-        //attachment.author_name = 'Author: ' + extensionAuthor;
-        attachment.text = 'Author: ' + extensionAuthor;
+        //attachment.author_name = 'Author(s): ' + extensionAuthor;
+        attachment.text = 'Author(s): ' + extensionAuthor;
         if (extensionEmail) {
             var extensionEmailHash = crypto.createHash('md5').update(extensionEmail).digest('hex');
             //attachment.author_icon = 'https://www.gravatar.com/avatar/' + extensionEmailHash;
-
-
-            attachment.thumb_url = 'https://www.gravatar.com/avatar/' + extensionEmailHash;
+            attachment.thumb_url = 'https://www.gravatar.com/avatar/' + extensionEmailHash + '?d=404';
         }
     }
 
