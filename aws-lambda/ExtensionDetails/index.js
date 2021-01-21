@@ -83,7 +83,7 @@ exports.handler = async (event, context, callback) => {
 };
 
 /**
- * Execute HTTPS request to Slack webhook to post message
+ * Execute HTTPS request to TYPO3 Extension Repository's API to retrieve extension details
  */
 function executeRequest(options, data) {
     console.log('executeRequest()');
@@ -197,6 +197,8 @@ function generateSlackSuccessResponse(extensionDetails) {
         if (extensionEmail) {
             var extensionEmailHash = crypto.createHash('md5').update(extensionEmail).digest('hex');
             //attachment.author_icon = 'https://www.gravatar.com/avatar/' + extensionEmailHash;
+
+
             attachment.thumb_url = 'https://www.gravatar.com/avatar/' + extensionEmailHash;
         }
     }
