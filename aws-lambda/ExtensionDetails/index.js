@@ -121,6 +121,7 @@ function generateSlackSuccessResponse(extensionDetails) {
     const extensionEmail = extractExtensionAuthorEmail(extensionDetails.current_version.author || null);
     const downloadLink = extensionDetails.current_version.download.zip || null;
     const repositoryLink = extensionDetails.meta.repository_url || null;
+    const typo3compatibility = extractVersionCompatibilities(extensionDetails.current_version.typo3_versions || null);
 
     var fields = [
         {
@@ -163,6 +164,17 @@ function generateSlackSuccessResponse(extensionDetails) {
             {
                 "title": "Description",
                 "value": extensionDescription.replace(/\s+/g, ' ').replace(/\n/g, ''),
+                "short": false
+            }
+        );
+    }
+
+    // List of TYPO3 version compatibility (long format)
+    if (typo3compatibility) {
+        fields.push(
+            {
+                "title": "Compatibilities",
+                "value": 'TYPO3 ' + typo3compatibility,
                 "short": false
             }
         );
@@ -319,6 +331,33 @@ function extractExtensionAuthorEmail(extensionAuthor) {
                 console.log('extensionAuthor.email: ' + extensionAuthor.email)
                 return extensionAuthor.email;
             }
+        }
+    }
+    return null;
+}
+
+/**
+ * Returns a comma-separated list of TYPO3 versions as a string (or NULL)
+ * For example: "v10, v11"
+ */
+function extractVersionCompatibilities(typo3versions) {
+    var versionString = '';
+    var pattern = new RegExp('[0-9]*');
+    if (Array.isArray(typo3versions) && typo3versions !== null) {
+        if (typo3versions.length > 0) {
+            typo3versions.forEach(function (version, index) {
+                if (pattern.test(version)) {
+                    versionString = versionString + 'v' + version + ', ';
+                }
+            });
+            // Remove the "," at the end:
+            versionString = versionString.replace(/, $/, '');
+            // Replace the last occurrence of "," with "and"
+            versionString = versionString.replace(/,([^,]*)$/, ' and $1');
+            // Remove double spaces
+            versionString = versionString.replace(/\s\s+/g, ' ');
+            console.log('TYPO3 compatibility: ' + versionString);
+            return versionString;
         }
     }
     return null;
