@@ -158,24 +158,13 @@ function generateSlackSuccessResponse(extensionDetails) {
         );
     }
 
-    // Sanitized description (long format)
-    if (extensionDescription) {
-        fields.push(
-            {
-                "title": "Description",
-                "value": extensionDescription.replace(/\s+/g, ' ').replace(/\n/g, ''),
-                "short": false
-            }
-        );
-    }
-
     // List of TYPO3 version compatibility (long format)
     if (typo3compatibility) {
         fields.push(
             {
                 "title": "Compatibility",
                 "value": 'TYPO3 ' + typo3compatibility,
-                "short": false
+                "short": true
             }
         );
     }
@@ -186,6 +175,17 @@ function generateSlackSuccessResponse(extensionDetails) {
             {
                 "title": "Further details",
                 "value":  "<" + terLink + "|TYPO3 Extension Repository>",
+                "short": true
+            }
+        );
+    }
+
+    // Sanitized description (long format)
+    if (extensionDescription) {
+        fields.push(
+            {
+                "title": "Description",
+                "value": extensionDescription.replace(/\s+/g, ' ').replace(/\n/g, ''),
                 "short": false
             }
         );
