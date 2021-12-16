@@ -118,6 +118,7 @@ function generateSlackSuccessResponse(extensionDetails) {
     const extensionDescription = extensionDetails.current_version.description || 'n/a';
     const extensionAuthor = extractExtensionAuthor(extensionDetails.current_version.author || null);
     const extensionEmail = extractExtensionAuthorEmail(extensionDetails.current_version.author || null);
+    const terLink = 'https://extensions.typo3.org/extensions/' + extensionDetails.key;
     const downloadLink = extensionDetails.current_version.download.zip || null;
     const repositoryLink = extensionDetails.meta.repository_url || null;
     const typo3compatibility = extractVersionCompatibilities(extensionDetails.current_version.typo3_versions || null);
@@ -174,6 +175,17 @@ function generateSlackSuccessResponse(extensionDetails) {
             {
                 "title": "Compatibility",
                 "value": 'TYPO3 ' + typo3compatibility,
+                "short": false
+            }
+        );
+    }
+
+    // Link to the TYPO3 Extension Repository (TER)
+    if (terLink) {
+        fields.push(
+            {
+                "title": "Further details",
+                "value":  "<" + terLink + "|TYPO3 Extension Repository>",
                 "short": false
             }
         );
