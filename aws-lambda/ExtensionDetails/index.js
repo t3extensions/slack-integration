@@ -51,7 +51,6 @@ exports.handler = async (event, context, callback) => {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
                 'Accept': 'application/json',
-                'Content-Length': Buffer.byteLength(data),
                 'Authorization': 'Bearer ' + process.env.TER_ACCESS_TOKEN
             }
         };
