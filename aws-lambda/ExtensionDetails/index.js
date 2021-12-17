@@ -119,9 +119,12 @@ function generateSlackSuccessResponse(extensionDetails) {
     const extensionAuthor = extractExtensionAuthor(extensionDetails.current_version.author || null);
     const extensionEmail = extractExtensionAuthorEmail(extensionDetails.current_version.author || null);
     const terLink = 'https://extensions.typo3.org/extensions/' + extensionDetails.key;
-    const downloadLink = extensionDetails.current_version.download.zip || null;
+    const zipDownloadLink = extensionDetails.current_version.download.zip || null;
+    const t3xDownloadLink = extensionDetails.current_version.download.t3x || null;
     const repositoryLink = extensionDetails.meta.repository_url || null;
+    const packagistDownloadLink = extensionDetails.meta.packagist || null;
     const typo3compatibility = extractVersionCompatibilities(extensionDetails.current_version.typo3_versions || null);
+    const downloadLinks = getDownloadLinks(zipDownloadLink, t3xDownloadLink, packagistDownloadLink);
 
     var fields = [
         {
@@ -137,11 +140,11 @@ function generateSlackSuccessResponse(extensionDetails) {
     ];
 
     // Download link: current_version.download.zip
-    if (downloadLink) {
+    if (downloadLinks) {
         fields.push(
             {
                 "title": "Download",
-                "value":  "<" + downloadLink + "|ZIP file>",
+                "value": downloadLinks.join(' | '),
                 "short": true
             }
         );
@@ -315,6 +318,23 @@ function getRepositoryLink(repositoryLink) {
         return "Git repository at <" + repositoryLink + "|Bitbucket>";
     }
     return 'Code repository';
+}
+
+/**
+ * Create list of download link(s)
+ */
+function getDownloadLinks(zipDownloadLink, t3xDownloadLink, packagistDownloadLink) {
+    var downloadLinks = [];
+    if (zipDownloadLink) {
+        downloadLinks.push("<" + zipDownloadLink + "|ZIP>");
+    }
+    if (t3xDownloadLink) {
+        downloadLinks.push("<" + t3xDownloadLink + "|T3X>");
+    }
+    if (packagistDownloadLink) {
+        downloadLinks.push("<" + packagistDownloadLink + "|Packagist>");
+    }
+    return downloadLinks;
 }
 
 /**
