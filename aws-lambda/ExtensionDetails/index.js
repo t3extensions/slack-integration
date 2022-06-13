@@ -118,7 +118,7 @@ function generateSlackSuccessResponse(extensionDetails) {
     const extensionDescription = extensionDetails.current_version.description || 'n/a';
     const extensionAuthor = extractExtensionAuthor(extensionDetails.current_version.author || null);
     const extensionEmail = extractExtensionAuthorEmail(extensionDetails.current_version.author || null);
-    const terLink = 'https://extensions.typo3.org/extensions/' + extensionDetails.key;
+    const terLink = 'https://extensions.typo3.org/extension/' + extensionDetails.key;
     const zipDownloadLink = extensionDetails.current_version.download.zip || null;
     const t3xDownloadLink = extensionDetails.current_version.download.t3x || null;
     const repositoryLink = extensionDetails.meta.repository_url || null;
