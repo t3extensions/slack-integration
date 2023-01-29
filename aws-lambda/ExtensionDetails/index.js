@@ -55,19 +55,29 @@ exports.handler = async (event, context, callback) => {
             }
         };
         var extensionDetails = await executeRequest(options, data);
-        extensionDetails = JSON.parse(extensionDetails);
-        console.log(util.inspect(extensionDetails, {
-            depth: 5
-        }));
-        if (extensionDetails.hasOwnProperty(0) && typeof extensionDetails[0] === 'object' && extensionDetails[0] !== null) {
-            // Success, extension details found
-            responseData = await generateSlackSuccessResponse(extensionDetails[0]);
-        } else {
-            // Failed
-            responseData = 'Something went wrong.';
-            if (typeof extensionDetails === 'object' && extensionDetails !== null && extensionDetails.hasOwnProperty('error_description')) {
-                responseData = await generateSlackFailedResponse(extensionDetails.error_description);
+        console.log(extensionDetails);
+
+        var isValidJSON = true;
+        try { JSON.parse(jsonString) } catch { isValidJSON = false }
+
+        if (isValidJSON) {            
+            extensionDetails = JSON.parse(extensionDetails);
+            console.log(util.inspect(extensionDetails, {
+                depth: 5
+            }));
+            if (extensionDetails.hasOwnProperty(0) && typeof extensionDetails[0] === 'object' && extensionDetails[0] !== null) {
+                // Success, extension details found
+                responseData = await generateSlackSuccessResponse(extensionDetails[0]);
+            } else {
+                // Failed
+                responseData = 'Something went wrong.';
+                if (typeof extensionDetails === 'object' && extensionDetails !== null && extensionDetails.hasOwnProperty('error_description')) {
+                    responseData = await generateSlackFailedResponse(extensionDetails.error_description);
+                }
             }
+        } else {
+            console.log("Error: invalid data received from the TYPO3 Extension Repository (TER)");
+            responseData = await generateSlackFailedResponse("Invalid data received from the TYPO3 Extension Repository (TER).");
         }
     }
 
