@@ -1,9 +1,9 @@
 /**
  * ExtensionDetails
  *
- * (c)2020-2022 by Michael Schams <schams.net>
+ * (c)2020-2023 by Michael Schams <schams.net>
  * https://t3extensions.org
- * Version 2.02
+ * Version 2.03
  */
 
 'use strict';
