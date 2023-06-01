@@ -4,6 +4,10 @@
  * (c)2020-2023 by Michael Schams <schams.net>
  * https://t3extensions.org
  * Version 2.03
+ *
+ * Runtime: Node.js 12.x
+ * Timeout: 10 sec
+ * Asynchronous invocation: 0 retry attempts
  */
 
 'use strict';
