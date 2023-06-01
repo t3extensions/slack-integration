@@ -58,7 +58,7 @@ exports.handler = async (event, context, callback) => {
         console.log(extensionDetails);
 
         var isValidJSON = true;
-        try { JSON.parse(jsonString) } catch { isValidJSON = false }
+        try { JSON.parse(extensionDetails) } catch { isValidJSON = false }
 
         if (isValidJSON) {            
             extensionDetails = JSON.parse(extensionDetails);
